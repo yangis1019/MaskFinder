@@ -11,10 +11,19 @@ with open("./data.json", "r", encoding='utf-8') as f:
 
 print("데이터를 성공적으로 불러왔습니다. " + unquote(addr) + "에 있는 공적 마스크 판매장소는 총 " + str(data["count"]) + "개 입니다.")
 
-n = int(input("번호를 입력하세요: "))
+try:
+    n = int(input("번호를 입력하세요: "))
+except ValueError:
+    print("숫자가 아닙니다.")
+    exit(1)
 n -= 1
 
-print("주소: " + data["stores"][n]["addr"])
+try:
+    print("주소: " + data["stores"][n]["addr"])
+except IndexError:
+    print("오류 발생. 주소나 숫자를 정확하게 입력하였는지 다시 한번 확인하여 주세요.")
+    exit(1)
+
 print("명칭: " + data["stores"][n]["name"])
 if data["stores"][n]["remain_stat"] == "plenty":
     print("남은 마스크 수: 100개 이상")
