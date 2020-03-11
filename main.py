@@ -2,7 +2,7 @@ import json
 from urllib.request import urlretrieve
 from urllib.parse import quote, unquote
 
-addr = quote(input("조회하고 싶은 지역을 입력하세요(시/군/구까지): "))
+addr = quote(input("조회하고 싶은 지역을 입력하세요: "))
 
 urlretrieve("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address="+addr, "./data.json")
 
