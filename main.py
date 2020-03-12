@@ -19,6 +19,10 @@ except IndexError:
     print("잘못된 주소입니다.")
     input("엔터 키로 종료합니다...")
     exit(1)
+except KeyError:
+    print("주소를 입력하지 않았거나 API 키가 잘못되었습니다.")
+    input("엔터 키로 종료합니다...")
+    exit(1)
 
 m = input("몇m 주변을 검색할지 입력하세요: ")
 
