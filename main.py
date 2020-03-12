@@ -1,10 +1,15 @@
 import json
 from urllib.request import urlretrieve
 import requests
+from colorama import init, Fore, Back, Style
+init()
+
+print("MaskFinder - 공적 마스크 판매 정보 제공")
+print("주의: 이 프로그램에서 제공하는 마스크 재고 정보는 실제와 차이가 있을 수 있습니다.")
 
 try:
     addr = input("주소를 입력하세요: ")
-    api_key = "[YOUR_KAKAO_REST_API_KEY]"
+    api_key = "YOUR_KAKAO_REST_API_KEY"
     res = requests.get("https://dapi.kakao.com/v2/local/search/address.json", headers={"Authorization":"KakaoAK "+api_key}, params={"query":addr})
     data = json.loads(res.text)
     
@@ -25,9 +30,25 @@ with open("./data.json", "r", encoding='utf-8') as f:
 
 print("데이터를 성공적으로 불러왔습니다. " + addr + "(으)로부터 "+ m +"미터 이내에 있는 공적 마스크 판매장소는 총 " + str(data["count"]) + "개 입니다.")
 
-print("|  주소  |  명칭  |  남은 마스크 수  |")
+print("|                  주소                  |     명칭     |  재고  |")
+print("------------------------------------------------------------------")
 
 for i in range(0, data["count"]):
+    try:
+        if data["stores"][i]["remain_stat"] == "plenty":
+            pass
+    except KeyError:
+        continue
+    if data["stores"][i]["remain_stat"] == "plenty":
+        print(Fore.GREEN + Style.BRIGHT, end="")
+    elif data["stores"][i]["remain_stat"] == "some":
+        print(Fore.YELLOW + Style.BRIGHT, end="")
+    elif data["stores"][i]["remain_stat"] == "few":
+        print(Fore.RED + Style.BRIGHT, end="")
+    elif data["stores"][i]["remain_stat"] == None:
+        print(Fore.WHITE, end="")
+    else:
+        print(Fore.WHITE, end="")
     print("|  ", end="")
     print(data["stores"][i]["addr"], end="")
     print("  |  ", end="")
@@ -43,6 +64,6 @@ for i in range(0, data["count"]):
         print("알 수 없음", end="")
     else:
         print("0~1개", end="")
-    print("  |")
+    print("  |"+Fore.RESET+Style.RESET_ALL)
 
 input("엔터 키로 종료합니다...")
