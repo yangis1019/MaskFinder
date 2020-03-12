@@ -4,7 +4,7 @@ import requests
 
 try:
     addr = input("주소를 입력하세요: ")
-    api_key = "9cc93af28cb451da16bfa4dccb01f62f"
+    api_key = "[YOUR_KAKAO_REST_API_KEY]"
     res = requests.get("https://dapi.kakao.com/v2/local/search/address.json", headers={"Authorization":"KakaoAK "+api_key}, params={"query":addr})
     data = json.loads(res.text)
     
