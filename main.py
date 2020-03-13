@@ -24,7 +24,7 @@ except KeyError:
     input("엔터 키로 종료합니다...")
     exit(1)
 
-m = input("몇m 주변을 검색할지 입력하세요: ")
+m = input("몇m 주변을 검색할지 입력하세요(최대 5000m): ")
 
 urlretrieve("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+y+"&lng="+x+"&m"+m, "./data.json")
 
